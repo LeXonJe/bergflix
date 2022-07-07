@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Source {
+  id          Int    @id @default(autoincrement())
+  thumbnail   String
+  title       String
+  description String
+  path        String
+
+  season   Season @relation(fields: [seasonId], references: [id])
+  seasonId Int
+}
+
+model Season {
+  id      Int      @id @default(autoincrement())
+  title   String
+  sources Source[]
+
+  media   Media @relation(fields: [mediaId], references: [id])
+  mediaId Int
+}
+
+model Media {
+  id            Int       @id @default(autoincrement())
+  type          MediaType
+  title         String
+  description   String
+  genre         String
+  ageRestricted Int
+  releasedAt    DateTime
+  logo          String?
+  preview       String
+
+  seasons Season[]
+}
+
+enum MediaType {
+  MOVIE
+  SERIES
+}

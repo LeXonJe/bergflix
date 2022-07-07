@@ -1,0 +1,24 @@
+version: '3'
+services:
+  prisma:
+    build:
+      context: ./backend/prisma
+      dockerfile: Dockerfile
+    networks:
+      - bergflix
+
+  db:
+    image: postgres:latest
+    container_name: bergflix-db
+    networks:
+      - bergflix
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    volumes:
+      - ./db:/var/lib/postgresql/data
+
+networks:
+  bergflix:
+    name: bergflix
