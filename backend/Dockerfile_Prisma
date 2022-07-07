@@ -8,9 +8,12 @@ WORKDIR /app
 
 # Install prisma for the migration
 RUN npm install -g prisma --unsafe-perm
+RUN npm install -g ts-node
 
 # Copy schema and migration folder
 ADD ./prisma/ ./prisma/
 ADD ./package.json .
+
+RUN prisma generate
 
 CMD [ "prisma", "migrate", "deploy"]
