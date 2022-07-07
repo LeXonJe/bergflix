@@ -10,6 +10,7 @@ WORKDIR /app
 RUN npm install -g prisma --unsafe-perm
 
 # Copy schema and migration folder
-ADD ./ ./prisma/
+ADD ./prisma/ ./prisma/
+ADD ./package.json .
 
 CMD [ "prisma", "migrate", "deploy"]
