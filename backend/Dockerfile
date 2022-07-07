@@ -23,6 +23,7 @@ WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY yarn.lock ./
+COPY prisma ./prisma/
 
 RUN yarn install --production
 
@@ -30,4 +31,4 @@ COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
-CMD ["node", "dist/main"]
+CMD ["yarn", "run", "start:prod"]
